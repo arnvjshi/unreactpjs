@@ -1,0 +1,57 @@
+{
+  "name": "unreactpjs",
+  "version": "1.2.3",
+  "description": "A framework combining the best of Angular and React for enhanced component communication.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "node dev.js",
+    "arnv": "node dev.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "unreact",
+    "framework",
+    "react",
+    "angular",
+    "components",
+    "state management",
+    "typescript",
+    "nextjs",
+    "app directory",
+    "glassmorphism",
+    "neumorphism"
+  ],
+  "author": "Arnav Joshi",
+  "homepage": "https://github.com/arnvjshi/unreactpjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnvjshi/unreactpjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arnvjshi/unreactpjs/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "dist/",
+    "create-unreactpjs-app/",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0"
+  },
+  "bin": {
+    "create-unreactpjs-app": "./create-unreactpjs-app/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./core/component": "./dist/core/component.js",
+    "./core/state": "./dist/core/state.js",
+    "./core/communication": "./dist/core/communication.js"
+  }
+}
