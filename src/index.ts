@@ -1,6 +1,8 @@
 import State from './core/state';
 import Component, { createComponent } from './core/component';
 import { Communication } from './core/communication';
+export { Navbar } from './components/Navbar';
+export { Footer } from './components/Footer';
 
 class Unreact {
     private state: State;

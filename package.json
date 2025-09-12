@@ -53,6 +53,8 @@
     ".": "./dist/index.js",
     "./core/component": "./dist/core/component.js",
     "./core/state": "./dist/core/state.js",
-    "./core/communication": "./dist/core/communication.js"
+    "./core/communication": "./dist/core/communication.js",
+    "./components/Navbar": "./dist/components/Navbar.js",
+    "./components/Footer": "./dist/components/Footer.js"
   }
 }

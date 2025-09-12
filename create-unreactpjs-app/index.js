@@ -341,6 +341,8 @@ export default Button;
       const componentsIndex = `
 // Export all components from this file for easy importing
 export { Button } from './Button';
+export { Navbar } from './Navbar';
+export { Footer } from './Footer';
 
 // Add more component exports here as you create them
 `;
@@ -701,15 +703,16 @@ body {
 }`;
       await fs.writeFile(path.join(appPath, 'public', 'styles.css'), stylesCss);
 
-      // Copy branding assets (logo and banner) from the package assets
+      // Copy branding assets (prefer transparent logo) from the package assets
+      const logoTransparentSrc = path.resolve(__dirname, '..', 'assets', 'logo-transparent.png');
       const logoSrc = path.resolve(__dirname, '..', 'assets', 'logo.png');
-      const bannerSrc = path.resolve(__dirname, '..', 'assets', 'banner.png');
       try {
-        if (fs.existsSync(logoSrc)) {
-          await fs.copyFile(logoSrc, path.join(appPath, 'public', 'logo.png'));
-        }
-        if (fs.existsSync(bannerSrc)) {
-          await fs.copyFile(bannerSrc, path.join(appPath, 'public', 'banner.png'));
+        if (fs.existsSync(logoTransparentSrc)) {
+          await fs.copyFile(logoTransparentSrc, path.join(appPath, 'public', 'logo-transparent.png'));
+          await fs.copyFile(logoTransparentSrc, path.join(appPath, 'public', 'favicon.png'));
+        } else if (fs.existsSync(logoSrc)) {
+          await fs.copyFile(logoSrc, path.join(appPath, 'public', 'logo-transparent.png'));
+          await fs.copyFile(logoSrc, path.join(appPath, 'public', 'favicon.png'));
         }
       } catch (_) {}
 
@@ -724,22 +727,23 @@ body {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     html, body { height: 100%; }
-    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #fff; overflow: hidden; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #fff; overflow: hidden; background:#0b0b0f; }
     .vanta-canvas { position: fixed !important; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
     .container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 2rem; }
     .logo { max-width: 120px; margin-bottom: 1rem; }
     .title { font-size: clamp(2rem, 6vw, 4rem); font-weight: 800; margin: 0.5rem 0; }
     .subtitle { opacity: 0.9; margin-bottom: 1.5rem; }
-    .home-btn { background: linear-gradient(145deg, #667eea, #764ba2); color: #fff; border: none; padding: 0.85rem 1.25rem; border-radius: 10px; cursor: pointer; font-weight: 600; }
+    .home-btn { background: linear-gradient(145deg, #7c3aed, #4c1d95); color: #fff; border: none; padding: 0.85rem 1.25rem; border-radius: 10px; cursor: pointer; font-weight: 600; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://unpkg.com/vanta@latest/dist/vanta.waves.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <img class="logo" src="logo.png" alt="UnReact.js Logo" />
+    <img class="logo" src="logo-transparent.png" alt="UnReact.js Logo" onerror="this.src='logo.png'" />
     <h1 class="title">404</h1>
     <p class="subtitle">Sorry, the page you are looking for does not exist.</p>
     <a href="/"><button class="home-btn">Go Home</button></a>
@@ -752,7 +756,7 @@ body {
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
-          color: 0x4ecdc4,
+          color: 0x7c3aed,
           shininess: 50,
           waveHeight: 20,
           waveSpeed: 0.75,
