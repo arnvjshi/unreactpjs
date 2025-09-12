@@ -72,8 +72,10 @@ program
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
-      body { position: relative; }
+      body { position: relative; background: #0b0b0f; }
       #root { position: relative; z-index: 2; }
       .vanta-canvas { position: fixed !important; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
     </style>
@@ -91,7 +93,7 @@ program
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
-            color: 0x4ecdc4,
+            color: 0x7c3aed,
             shininess: 50,
             waveHeight: 20,
             waveSpeed: 0.75,
@@ -123,6 +125,8 @@ document.getElementById('root')?.appendChild(App({}));
 
       const layoutTs = `
 import { createComponent } from 'unreactpjs';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
 
 export interface LayoutProps {
   children: any;
@@ -133,12 +137,12 @@ export const RootLayout = createComponent((props: LayoutProps) => {
   const layout = document.createElement('div');
   layout.className = 'app-layout';
   
-  // Add meta tags and title
   if (props.title) {
     document.title = props.title;
   }
   
-  // Add children
+  layout.appendChild(Navbar({}));
+
   if (props.children) {
     if (Array.isArray(props.children)) {
       props.children.forEach(child => layout.appendChild(child));
@@ -146,6 +150,8 @@ export const RootLayout = createComponent((props: LayoutProps) => {
       layout.appendChild(props.children);
     }
   }
+
+  layout.appendChild(Footer({}));
   
   return layout;
 });
@@ -164,19 +170,6 @@ const HeroSection = createComponent(() => {
   
   const container = document.createElement('div');
   container.className = 'hero-container';
-  
-  const logo = document.createElement('img');
-  logo.src = 'logo.png';
-  logo.alt = 'UnReact.js Logo';
-  logo.style.maxWidth = '120px';
-  logo.style.marginBottom = '1rem';
-
-  const banner = document.createElement('img');
-  banner.src = 'banner.png';
-  banner.alt = 'UnReact.js Banner';
-  banner.style.maxWidth = '100%';
-  banner.style.borderRadius = '12px';
-  banner.style.margin = '0 auto 1.25rem';
 
   const title = document.createElement('h1');
   title.className = 'hero-title';
@@ -206,8 +199,6 @@ const HeroSection = createComponent(() => {
   container.appendChild(subtitle);
   container.appendChild(author);
   container.appendChild(ctaButton);
-  container.insertBefore(banner, title);
-  container.insertBefore(logo, banner);
   hero.appendChild(container);
   
   return hero;
@@ -304,7 +295,6 @@ export const HomePage = createComponent(() => {
   
   page.appendChild(HeroSection({}));
   page.appendChild(FeaturesSection({}));
-  page.appendChild(Footer({}));
   
   return page;
 });
@@ -338,9 +328,73 @@ export default Button;
 `;
       await fs.writeFile(path.join(appPath, 'app', 'components', 'Button.pjs'), sampleComponent);
 
+      const navbarComponent = `
+import { createComponent } from 'unreactpjs';
+
+export const Navbar = createComponent(() => {
+  const nav = document.createElement('nav');
+  nav.className = 'navbar glassmorphic';
+
+  const container = document.createElement('div');
+  container.className = 'navbar-container';
+
+  const left = document.createElement('div');
+  left.className = 'navbar-left';
+
+  const logoImg = document.createElement('img');
+  logoImg.src = 'logo-transparent.png';
+  logoImg.alt = 'UnReact.js Logo';
+  logoImg.onerror = () => { logoImg.src = 'logo.png'; };
+  logoImg.className = 'navbar-logo';
+
+  const brand = document.createElement('span');
+  brand.className = 'navbar-brand';
+  brand.textContent = 'UnReact.js';
+
+  left.appendChild(logoImg);
+  left.appendChild(brand);
+
+  const right = document.createElement('div');
+  right.className = 'navbar-right';
+  right.innerHTML = `
+    <a href="https://arnavjoshi.vercel.app/" target="_blank">Website</a>
+    <a href="https://github.com/arnvjshi/unreactpjs" target="_blank">Docs</a>
+  `;
+
+  container.appendChild(left);
+  container.appendChild(right);
+  nav.appendChild(container);
+  return nav;
+});
+
+export default Navbar;
+`;
+      await fs.writeFile(path.join(appPath, 'app', 'components', 'Navbar.pjs'), navbarComponent);
+
+      const footerComponent = `
+import { createComponent } from 'unreactpjs';
+
+export const Footer = createComponent(() => {
+  const footer = document.createElement('footer');
+  footer.className = 'footer';
+  footer.innerHTML = `
+    <div class="footer-content">
+      <p>\u00A9 2025 UnReact.js by <a href="https://arnavjoshi.vercel.app/" target="_blank">Arnav Joshi</a></p>
+      <p>License: CC0-1.0 · <a href="https://github.com/arnvjshi/unreactpjs" target="_blank">GitHub (Docs)</a></p>
+    </div>
+  `;
+  return footer;
+});
+
+export default Footer;
+`;
+      await fs.writeFile(path.join(appPath, 'app', 'components', 'Footer.pjs'), footerComponent);
+
       const componentsIndex = `
 // Export all components from this file for easy importing
 export { Button } from './Button';
+export { Navbar } from './Navbar';
+export { Footer } from './Footer';
 
 // Add more component exports here as you create them
 `;
