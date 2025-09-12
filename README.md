@@ -1,4 +1,4 @@
-# 🚀 unreactpjs
+#  <img src="https://raw.githubusercontent.com/arnvjshi/unreactpjs/main/assets/logo.png" width="100" alt="unreactpjs Logo" /> unreactpjs
 
 ![License](https://img.shields.io/github/license/arnvjshi/unreactpjs?style=flat-square)
 ![Stars](https://img.shields.io/github/stars/arnvjshi/unreactpjs?style=flat-square)
