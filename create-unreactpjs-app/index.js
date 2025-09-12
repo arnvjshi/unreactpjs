@@ -44,12 +44,12 @@ program
       const packageJson = {
         name: appName,
         version: '0.1.0',
-        main: 'app/index.ts',
+        main: 'app/index.pjs',
         scripts: {
-          start: 'npx esbuild app/index.ts --bundle --servedir=public --outfile=public/bundle.js',
-          dev: 'npx esbuild app/index.ts --bundle --servedir=public --outfile=public/bundle.js --watch',
-          arnv: 'npx esbuild app/index.ts --bundle --servedir=public --outfile=public/bundle.js --watch',
-          build: 'npx esbuild app/index.ts --bundle --outfile=dist/bundle.js',
+          start: 'npx esbuild app/index.pjs --bundle --servedir=public --outfile=public/bundle.js --loader:.pjs=ts --resolve-extensions=.pjs,.ts,.js',
+          dev: 'npx esbuild app/index.pjs --bundle --servedir=public --outfile=public/bundle.js --watch --loader:.pjs=ts --resolve-extensions=.pjs,.ts,.js',
+          arnv: 'npx esbuild app/index.pjs --bundle --servedir=public --outfile=public/bundle.js --watch --loader:.pjs=ts --resolve-extensions=.pjs,.ts,.js',
+          build: 'npx esbuild app/index.pjs --bundle --outfile=dist/bundle.js --loader:.pjs=ts --resolve-extensions=.pjs,.ts,.js',
         },
         dependencies: {
           unreactpjs: 'latest',
@@ -72,10 +72,34 @@ program
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+      body { position: relative; }
+      #root { position: relative; z-index: 2; }
+      .vanta-canvas { position: fixed !important; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    </style>
 </head>
 <body>
     <div id="root"></div>
     <script src="bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" integrity="sha512-0Qb0O1aQO8x8G2xHjWZyZrX8n9l4lT7n2v8Jw7r3Xy6fU6g0Z8sVxJcQm3g0r8nP7g1e9G5kqk0C2y0WQ7zNwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        if (window.VANTA && window.VANTA.WAVES) {
+          window.VANTA.WAVES({
+            el: document.body,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            color: 0x4ecdc4,
+            shininess: 50,
+            waveHeight: 20,
+            waveSpeed: 0.75,
+            zoom: 1
+          });
+        }
+      });
+    </script>
 </body>
 </html>
 `;
@@ -95,7 +119,7 @@ const App = createComponent(() => {
 
 document.getElementById('root')?.appendChild(App({}));
 `;
-      await fs.writeFile(path.join(appPath, 'app', 'index.ts'), indexTs);
+      await fs.writeFile(path.join(appPath, 'app', 'index.pjs'), indexTs);
 
       const layoutTs = `
 import { createComponent } from 'unreactpjs';
@@ -128,7 +152,7 @@ export const RootLayout = createComponent((props: LayoutProps) => {
 
 export default RootLayout;
 `;
-      await fs.writeFile(path.join(appPath, 'app', 'layout.ts'), layoutTs);
+      await fs.writeFile(path.join(appPath, 'app', 'layout.pjs'), layoutTs);
 
       const pageTs = `
 import { createComponent } from 'unreactpjs';
@@ -141,6 +165,19 @@ const HeroSection = createComponent(() => {
   const container = document.createElement('div');
   container.className = 'hero-container';
   
+  const logo = document.createElement('img');
+  logo.src = 'logo.png';
+  logo.alt = 'UnReact.js Logo';
+  logo.style.maxWidth = '120px';
+  logo.style.marginBottom = '1rem';
+
+  const banner = document.createElement('img');
+  banner.src = 'banner.png';
+  banner.alt = 'UnReact.js Banner';
+  banner.style.maxWidth = '100%';
+  banner.style.borderRadius = '12px';
+  banner.style.margin = '0 auto 1.25rem';
+
   const title = document.createElement('h1');
   title.className = 'hero-title';
   title.innerHTML = 'Welcome to <span class="gradient-text">UnReact.js</span>';
@@ -169,6 +206,8 @@ const HeroSection = createComponent(() => {
   container.appendChild(subtitle);
   container.appendChild(author);
   container.appendChild(ctaButton);
+  container.insertBefore(banner, title);
+  container.insertBefore(logo, banner);
   hero.appendChild(container);
   
   return hero;
@@ -272,7 +311,7 @@ export const HomePage = createComponent(() => {
 
 export default HomePage;
 `;
-      await fs.writeFile(path.join(appPath, 'app', 'page.ts'), pageTs);
+      await fs.writeFile(path.join(appPath, 'app', 'page.pjs'), pageTs);
 
       const sampleComponent = `
 import { createComponent } from 'unreactpjs';
@@ -297,7 +336,7 @@ export const Button = createComponent((props: ButtonProps) => {
 
 export default Button;
 `;
-      await fs.writeFile(path.join(appPath, 'app', 'components', 'Button.ts'), sampleComponent);
+      await fs.writeFile(path.join(appPath, 'app', 'components', 'Button.pjs'), sampleComponent);
 
       const componentsIndex = `
 // Export all components from this file for easy importing
@@ -305,7 +344,7 @@ export { Button } from './Button';
 
 // Add more component exports here as you create them
 `;
-      await fs.writeFile(path.join(appPath, 'app', 'components', 'index.ts'), componentsIndex);
+      await fs.writeFile(path.join(appPath, 'app', 'components', 'index.pjs'), componentsIndex);
 
       const stylesCss = `/* Reset and base styles */
 * {
@@ -661,6 +700,71 @@ body {
   background: rgba(255, 255, 255, 0.5);
 }`;
       await fs.writeFile(path.join(appPath, 'public', 'styles.css'), stylesCss);
+
+      // Copy branding assets (logo and banner) from the package assets
+      const logoSrc = path.resolve(__dirname, '..', 'assets', 'logo.png');
+      const bannerSrc = path.resolve(__dirname, '..', 'assets', 'banner.png');
+      try {
+        if (fs.existsSync(logoSrc)) {
+          await fs.copyFile(logoSrc, path.join(appPath, 'public', 'logo.png'));
+        }
+        if (fs.existsSync(bannerSrc)) {
+          await fs.copyFile(bannerSrc, path.join(appPath, 'public', 'banner.png'));
+        }
+      } catch (_) {}
+
+      // Create a branded 404 page with Vanta background
+      const notFoundHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found - UnReact.js</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #fff; overflow: hidden; }
+    .vanta-canvas { position: fixed !important; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 2rem; }
+    .logo { max-width: 120px; margin-bottom: 1rem; }
+    .title { font-size: clamp(2rem, 6vw, 4rem); font-weight: 800; margin: 0.5rem 0; }
+    .subtitle { opacity: 0.9; margin-bottom: 1.5rem; }
+    .home-btn { background: linear-gradient(145deg, #667eea, #764ba2); color: #fff; border: none; padding: 0.85rem 1.25rem; border-radius: 10px; cursor: pointer; font-weight: 600; }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://unpkg.com/vanta@latest/dist/vanta.waves.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="logo.png" alt="UnReact.js Logo" />
+    <h1 class="title">404</h1>
+    <p class="subtitle">Sorry, the page you are looking for does not exist.</p>
+    <a href="/"><button class="home-btn">Go Home</button></a>
+  </div>
+  <script>
+    window.addEventListener('load', function() {
+      if (window.VANTA && window.VANTA.WAVES) {
+        window.VANTA.WAVES({
+          el: document.body,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          color: 0x4ecdc4,
+          shininess: 50,
+          waveHeight: 20,
+          waveSpeed: 0.75,
+          zoom: 1
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+`;
+      await fs.writeFile(path.join(appPath, 'public', '404.html'), notFoundHtml);
 
       console.log(`UnReact app created in ${appPath}`);
       console.log(`Run:
