@@ -1,48 +1,73 @@
-# UnReact.js
+# 🚀 unreactpjs
 
-A modern framework combining the best of Angular and React for enhanced component communication.
+![License](https://img.shields.io/github/license/arnvjshi/unreactpjs?style=flat-square)
+![Stars](https://img.shields.io/github/stars/arnvjshi/unreactpjs?style=flat-square)
+![Issues](https://img.shields.io/github/issues/arnvjshi/unreactpjs?style=flat-square)
 
-## Features
+---
 
-- **Next.js-like App Directory**: Modern file-based routing structure
-- **Component-Based Architecture**: Build reusable components with enhanced communication
-- **TypeScript First**: Full TypeScript support with excellent developer experience
-- **Glassmorphism & Neumorphism**: Beautiful modern UI effects
-- **Performance Focused**: Optimized for speed and efficiency
+<img src="https://raw.githubusercontent.com/arnvjshi/unreactpjs/main/assets/banner.png" alt="unreactpjs Banner" width="100%" />
 
-## Quick Start
+## ✨ Overview
+
+**unreactpjs** is a modern, lightweight JavaScript library for building fast and scalable web applications without the overhead of traditional frameworks.
+
+---
+
+## 📦 Features
+
+- ⚡ **Blazing Fast:** Minimal overhead for maximum performance.
+- 🧩 **Modular:** Use only what you need.
+- 🛠️ **Easy Integration:** Works seamlessly with existing projects.
+- 📝 **TypeScript Support:** First-class TypeScript definitions.
+- 🌍 **Cross-Platform:** Runs everywhere JavaScript does.
+
+---
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/arnvjshi/unreactpjs/main/assets/screenshot1.png" width="400" alt="Screenshot 1" />
+  <img src="https://raw.githubusercontent.com/arnvjshi/unreactpjs/main/assets/screenshot2.png" width="400" alt="Screenshot 2" />
+</p>
+
+---
+
+## 🚀 Getting Started
 
 ```bash
-npx create-unreactpjs-app my-app
-cd my-app
-npm install
-npm run dev    # Start development server with watch mode
-npm arnv       # Alternative command to start development server
-npm start      # Build and serve once
-npm run build  # Build for production
+# Install via npm
+npm install unreactpjs
 ```
 
-## App Directory Structure
-
-```
-my-app/
-├── app/
-│   ├── layout.ts      # Root layout component
-│   ├── page.ts        # Main page component
-│   ├── index.ts       # Entry point
-│   └── components/    # Reusable components
-│       ├── Button.ts   # Sample button component
-│       └── index.ts    # Component exports
-├── public/
-│   ├── index.html     # HTML template
-│   └── styles.css     # Global styles
-└── package.json
+```js
+import { something } from 'unreactpjs';
+// ...your code
 ```
 
-## Author
+---
 
-Created by **Arnav Joshi** - [github.com/arnvjshi](https://github.com/arnvjshi)
+## 📖 Documentation
 
-## License
+- [Getting Started](docs/getting-started.md)
+- [API Reference](docs/api.md)
+- [Examples](docs/examples.md)
 
-MIT License - Made with ❤️ for the developer community
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) first.
+
+---
+
+## 📬 Contact
+
+- [GitHub Issues](https://github.com/arnvjshi/unreactpjs/issues)
+- [Email](mailto:arnvjshi@gmail.com)
+
+---
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/arnvjshi/unreactpjs/main/assets/logo.png" width="100" alt="unreactpjs Logo" />
+</p>
