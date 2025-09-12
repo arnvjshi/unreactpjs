@@ -1,6 +1,6 @@
 {
   "name": "unreactpjs",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A framework combining the best of Angular and React for enhanced component communication.",
   "main": "dist/index.js",
   "scripts": {
@@ -36,6 +36,7 @@
   "files": [
     "dist/",
     "create-unreactpjs-app/",
+    "assets/",
     "README.md",
     "LICENSE"
   ],
