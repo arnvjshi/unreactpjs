@@ -31,4 +31,3 @@ exports.Navbar = (0, component_1.createComponent)(() => {
     return nav;
 });
 exports.default = exports.Navbar;
-

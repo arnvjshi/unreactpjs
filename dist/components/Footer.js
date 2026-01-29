@@ -14,4 +14,3 @@ exports.Footer = (0, component_1.createComponent)(() => {
     return footer;
 });
 exports.default = exports.Footer;
-

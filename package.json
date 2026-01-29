@@ -1,6 +1,6 @@
 {
   "name": "unreactpjs",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "A framework combining the best of Angular and React for enhanced component communication.",
   "main": "dist/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/arnvjshi/unreactpjs/issues"
   },
-  "license": "MIT",
+  "license": "CC0-1.0",
   "files": [
     "dist/",
     "create-unreactpjs-app/",
